@@ -276,3 +276,133 @@ header {
   cursor: pointer;
   width: 100%;
 }
+/* =========================
+   微信打赏功能
+========================= */
+
+/* 打赏按钮 */
+.donate-btn {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    z-index: 1000;
+
+    padding: 12px 20px;
+    border: none;
+    border-radius: 25px;
+
+    background: linear-gradient(135deg, #19c37d, #087f5b);
+    color: white;
+
+    font-size: 15px;
+    font-weight: bold;
+
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.donate-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+}
+
+/* 弹窗遮罩 */
+.donate-modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 2000;
+
+    background: rgba(0, 0, 0, 0.8);
+
+    justify-content: center;
+    align-items: center;
+
+    padding: 20px;
+}
+
+/* 弹窗显示状态 */
+.donate-modal.show {
+    display: flex;
+}
+
+/* 弹窗主体 */
+.donate-content {
+    position: relative;
+    width: 100%;
+    max-width: 360px;
+    box-sizing: border-box;
+
+    padding: 30px 25px;
+    border-radius: 18px;
+
+    background: #151a25;
+    color: white;
+    text-align: center;
+
+    border: 1px solid rgba(25, 195, 125, 0.5);
+    box-shadow: 0 0 30px rgba(25, 195, 125, 0.15);
+}
+
+.donate-content h2 {
+    margin-top: 0;
+    color: #19c37d;
+}
+
+.donate-content p {
+    line-height: 1.6;
+}
+
+/* 收款码图片 */
+.donate-qrcode {
+    display: block;
+    width: 100%;
+    max-width: 250px;
+    height: auto;
+
+    margin: 20px auto;
+    border-radius: 8px;
+    background: white;
+}
+
+/* 关闭按钮 */
+.donate-close {
+    position: absolute;
+    top: 8px;
+    right: 12px;
+
+    border: none;
+    background: transparent;
+    color: white;
+
+    font-size: 30px;
+    cursor: pointer;
+}
+
+.donate-close:hover {
+    color: #19c37d;
+}
+
+.donate-tip {
+    color: #b8c4d6;
+    font-size: 14px;
+}
+
+/* 手机屏幕适配 */
+@media (max-width: 480px) {
+    .donate-btn {
+        right: 12px;
+        bottom: 12px;
+        padding: 10px 15px;
+        font-size: 13px;
+    }
+
+    .donate-content {
+        padding: 25px 18px;
+    }
+
+    .donate-qrcode {
+        max-width: 220px;
+    }
+}

@@ -1153,3 +1153,37 @@
     };
   });
 })();
+
+// =========================
+// 微信打赏功能
+// =========================
+
+document.addEventListener("DOMContentLoaded", function () {
+    const donateBtn = document.getElementById("donateBtn");
+    const donateModal = document.getElementById("donateModal");
+    const closeDonateBtn = document.getElementById("closeDonateBtn");
+
+    // 打开打赏弹窗
+    donateBtn.addEventListener("click", function () {
+        donateModal.classList.add("show");
+    });
+
+    // 点击关闭按钮
+    closeDonateBtn.addEventListener("click", function () {
+        donateModal.classList.remove("show");
+    });
+
+    // 点击弹窗外部区域关闭
+    donateModal.addEventListener("click", function (event) {
+        if (event.target === donateModal) {
+            donateModal.classList.remove("show");
+        }
+    });
+
+    // 按 Esc 键关闭弹窗
+    document.addEventListener("keydown", function (event) {
+        if (event.key === "Escape") {
+            donateModal.classList.remove("show");
+        }
+    });
+});
