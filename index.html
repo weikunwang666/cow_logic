@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <!-- 移动端视口关键配置：锁定比例、防双指缩放、支持刘海屏安全区 -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <title>赛博牛马：从实习生到集团董事长</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- 网页上方大标题 -->
+  <header>
+    <div class="game-logo">赛博牛马：逆袭董事长</div>
+    <div class="game-subtitle">CYBER CORPORATE MERGE SIMULATOR</div>
+  </header>
+
+  <!-- 游戏主舞台容器 -->
+  <div id="game-container">
+    <div class="bezel-top"></div>
+    <div id="danger-line"></div>
+
+  <!-- 顶部状态栏（追加复活币显示） -->
+    <div id="dashboard">
+      <div class="status-badge" id="player-badge">
+        <span>工号:</span>
+        <span id="current-player-name" style="color: #74b9ff;">未登记</span>
+        <span style="font-size: 10px; opacity: 0.6;">✎</span>
+      </div>
+      <div class="status-badge">
+        <span>薪资:</span>
+        <span id="score-text" class="money-num">0</span>
+      </div>
+      <div class="status-badge">
+        <span>下个:</span>
+        <span id="next-tier-text" style="color: #fab1a0;">实习生</span>
+      </div>
+      <!-- 新增：复活币胶囊 -->
+      <div id="revive-badge" style="display: none;">
+        <span>🪙</span><span id="revive-count-text">×0</span>
+      </div>
+      <button id="rank-btn" class="status-badge" style="cursor: pointer;">
+        🏆 龙虎榜
+      </button>
+    </div>
+
+    <!-- 首次登记身份弹窗 -->
+    <div id="account-modal" class="modal-overlay">
+      <div class="modal-box">
+        <h2 style="font-size: 18px;">入职打卡登记</h2>
+        <p style="font-size: 12px; color: #a4b0be; margin-top: 6px;">输入员工花名，业绩将存入大厂档案库：</p>
+        <input type="text" id="player-name-input" class="styled-input" maxlength="8" placeholder="例如：摸鱼架构师" />
+        <button id="save-name-btn" class="btn-primary">打卡上班</button>
+      </div>
+    </div>
+
+    <!-- 排行榜弹窗 -->
+    <div id="leaderboard-modal" class="modal-overlay">
+      <div class="modal-box">
+        <h2 style="font-size: 18px; color: #ffeaa7;">集团本月业绩榜单</h2>
+        <div id="leaderboard-list"></div>
+        <span class="close-link" id="close-rank-btn">返回工位</span>
+      </div>
+    </div>
+
+    <!-- 新增：打卡复活弹窗 -->
+    <div id="revive-modal" class="modal-overlay">
+      <div class="modal-box">
+        <h2 style="font-size: 18px; color: #ffeaa7;">⚠️ 面临裁员优化！</h2>
+        <p style="font-size: 12px; color: #dfe6e9; margin: 10px 0 16px;">
+          当前薪资: <span id="revive-score-val" style="color: #ffeaa7; font-weight: bold;">0</span><br/>
+          是否使用 1 枚复活币，消除顶层堆叠继续逆袭？
+        </p>
+        <button id="use-revive-btn" class="btn-revive">消耗 🪙 立即复活打卡</button>
+        <button id="giveup-btn" class="btn-giveup">放弃结算</button>
+      </div>
+    </div>
+    
+    <!-- 游戏结束弹窗 -->
+    <div id="game-over-modal" class="modal-overlay">
+      <div class="modal-box">
+        <h2 style="color: #ff7675; font-size: 20px;">工位已炸裂（已被优化）</h2>
+        <p id="final-score-text" style="margin: 14px 0; font-size: 16px; color: #ffeaa7; font-family: monospace;">本次到手薪资: ¥0</p>
+        <button id="restart-btn" class="btn-primary">重新投递简历</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="game.js"></script>
+</body>
+</html>

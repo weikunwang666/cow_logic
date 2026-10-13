@@ -1,0 +1,278 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* 页面根容器：锁死滚动、适配移动端 */
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  touch-action: none;
+  position: fixed;
+  color: #fff;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding-top: env(safe-area-inset-top, 8px);
+  padding-bottom: env(safe-area-inset-bottom, 8px);
+
+  /* 背景图设置 */
+  background: radial-gradient(circle at center, rgba(16, 16, 26, 0.72) 0%, rgba(10, 10, 18, 0.94) 100%),
+              url('images/bg.jpg') center/cover no-repeat fixed;
+  background-image: radial-gradient(circle at center, rgba(16, 16, 26, 0.72) 0%, rgba(10, 10, 18, 0.94) 100%),
+                    url('images/bg.jpg'),
+                    url('https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=1920&q=80');
+  background-size: cover;
+  background-position: center;
+}
+
+/* 顶部标题区（移动端紧凑化） */
+header {
+  margin: 6px 0 6px 0;
+  text-align: center;
+  flex-shrink: 0;
+}
+.game-logo {
+  font-size: 20px;
+  font-weight: 900;
+  letter-spacing: 1.5px;
+  background: linear-gradient(135deg, #ffeaa7 0%, #fab1a0 45%, #ff7675 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 20px rgba(255, 118, 117, 0.45);
+}
+.game-subtitle {
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  color: #74b9ff;
+  text-transform: uppercase;
+  opacity: 0.85;
+}
+
+/* 游戏核心舞台容器 */
+#game-container {
+  position: relative;
+  width: min(94vw, 420px);
+  height: calc(100vh - 58px - env(safe-area-inset-top) - env(safe-area-inset-bottom));
+  max-height: 720px;
+  background: rgba(24, 25, 38, 0.88);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1.5px solid rgba(116, 185, 255, 0.25);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.8),
+              0 0 25px rgba(108, 92, 231, 0.2);
+  flex-grow: 1;
+}
+
+/* 顶部边框条 */
+.bezel-top {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #6c5ce7, #0984e3, #6c5ce7);
+  opacity: 0.7;
+  z-index: 25;
+}
+
+/* 屏幕震动 */
+.screen-shake {
+  animation: shake 0.2s cubic-bezier(.36,.07,.19,.97) both;
+}
+@keyframes shake {
+  10%, 90% { transform: translate3d(-1px, 0, 0); }
+  20%, 80% { transform: translate3d(2px, 1px, 0); }
+  30%, 50%, 70% { transform: translate3d(-2px, -1px, 0); }
+  40%, 60% { transform: translate3d(2px, 0, 0); }
+}
+
+/* 警戒红线 */
+#danger-line {
+  position: absolute;
+  top: 110px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  border-top: 2px dashed rgba(255, 71, 87, 0.85);
+  box-shadow: 0 0 8px rgba(255, 71, 87, 0.6);
+  pointer-events: none;
+  z-index: 5;
+  animation: pulse 1.8s infinite;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 0.95; }
+}
+
+/* 顶部状态栏与龙虎榜按钮 */
+#dashboard {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  right: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 11px;
+  font-weight: 700;
+  z-index: 10;
+  gap: 4px;
+}
+.status-badge {
+  background: rgba(15, 15, 25, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  padding: 5px 8px;
+  border-radius: 14px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  white-space: nowrap;
+}
+#player-badge {
+  cursor: pointer;
+  color: #74b9ff;
+}
+.money-num {
+  color: #ffeaa7;
+  font-family: monospace;
+  font-size: 13px;
+}
+#rank-btn {
+  background: rgba(108, 92, 231, 0.45);
+  border: 1px solid rgba(162, 155, 254, 0.4);
+  color: #fff;
+  transition: all 0.15s ease;
+}
+#rank-btn:active {
+  transform: scale(0.93);
+  background: rgba(108, 92, 231, 0.8);
+}
+
+/* 弹窗遮罩 */
+.modal-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(10, 10, 18, 0.88);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 30;
+  padding: 20px;
+}
+.modal-box {
+  width: 100%;
+  max-width: 320px;
+  background: #1f1f2e;
+  border-radius: 16px;
+  padding: 20px;
+  border: 1px solid rgba(116, 185, 255, 0.3);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+  text-align: center;
+}
+.styled-input {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid #4834d4;
+  background: #13131c;
+  color: #fff;
+  font-size: 14px;
+  margin: 14px 0;
+  outline: none;
+}
+.btn-primary {
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  border: none;
+  background: linear-gradient(135deg, #0984e3, #6c5ce7);
+  color: #fff;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* 排行榜单样式 */
+#leaderboard-list {
+  max-height: 220px;
+  overflow-y: auto;
+  text-align: left;
+  margin: 12px 0;
+}
+.rank-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 7px 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  font-size: 12px;
+}
+.rank-row:nth-child(1) { color: #ffeaa7; font-weight: bold; }
+.rank-row:nth-child(2) { color: #dfe6e9; font-weight: bold; }
+.rank-row:nth-child(3) { color: #fab1a0; font-weight: bold; }
+
+.close-link {
+  display: inline-block;
+  margin-top: 8px;
+  color: #a4b0be;
+  font-size: 12px;
+  cursor: pointer;
+}
+/* 顶部复活币胶囊 */
+#revive-badge {
+  background: rgba(255, 234, 167, 0.15);
+  border: 1px solid #ffeaa7;
+  color: #ffeaa7;
+  padding: 4px 8px;
+  border-radius: 14px;
+  font-size: 11px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+@keyframes popIn {
+  0% { transform: scale(0.5); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* 复活弹窗专属按钮 */
+.btn-revive {
+  background: linear-gradient(135deg, #00b894, #00cec9);
+  color: #fff;
+  border: none;
+  padding: 11px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  width: 100%;
+  margin-bottom: 8px;
+  box-shadow: 0 4px 14px rgba(0, 184, 148, 0.4);
+}
+.btn-giveup {
+  background: transparent;
+  color: #b2bec3;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  padding: 9px;
+  border-radius: 8px;
+  font-size: 13px;
+  cursor: pointer;
+  width: 100%;
+}
